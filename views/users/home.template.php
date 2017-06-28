@@ -1,3 +1,4 @@
+<?php include('./views/elements/header.php'); ?>
 <table class="main" style="width: 80%; margin: 0 auto;">
 	<tr>
 		<td>User ID</td>
@@ -16,3 +17,6 @@
 	</tr>
 <?php endforeach; ?>
 </table>
+
+<button onclick="createUser()">Create New!</button>
+<?php include('./views/elements/footer.php'); ?>
