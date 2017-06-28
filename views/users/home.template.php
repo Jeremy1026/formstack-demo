@@ -19,4 +19,19 @@
 </table>
 
 <button onclick="createUser()">Create New!</button>
+<form method="POST" action="#" id="createUserForm" style="display:none;">
+	<label for="email">Email Address:
+		<input type="text" name="email" placeholder="email"/>
+	</label>
+	<label for="firstName">First Name:
+		<input type="text" name="firstName" placeholder="firstName"/>
+	</label>
+	<label for="lastName">Last Name:
+		<input type="text" name="lastName" placeholder="lastName"/>
+	</label>
+	<label for="password">Password:
+		<input type="password" name="password" placeholder="password"/>
+	</label>
+    <input type="submit" value="Create User">
+</form>
 <?php include('./views/elements/footer.php'); ?>
