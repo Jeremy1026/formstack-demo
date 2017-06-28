@@ -2,6 +2,8 @@
 
 require 'vendor/autoload.php';
 
+
+//Establish database credentials
 DB::$user = 'my_app';
 DB::$password = 'secret';
 DB::$dbName = 'my_app';
@@ -15,8 +17,6 @@ spl_autoload_register(function ($class) {
 	}
 
 });
-
-//if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 if (isset($_GET['route']) && isset($_GET['action'])) {
 	$controller = $_GET['route'];

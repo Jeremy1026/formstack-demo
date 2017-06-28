@@ -21,8 +21,10 @@
 			$id = $data['id'];
 			$user = array("email"=>$data['email'],
 						  "first_name"=>$data['firstName'],
-						  "last_name"=>$data['lastName'],
-						  "password"=>password_hash($data['password'],PASSWORD_BCRYPT));
+						  "last_name"=>$data['lastName']);
+			if ($data['password'] != '') {
+				$user["password"] = password_hash($data['password'],PASSWORD_BCRYPT);
+			}
 			echo json_encode($this->usersController->updateUser($id,$user));
 		}
 

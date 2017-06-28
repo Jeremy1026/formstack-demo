@@ -1,6 +1,7 @@
+var updating = false;
+
 $(document).ready(function() {
-	console.log("Ready");
-updateUserList();
+	// console.log("Ready");
 });
 
 function deleteUser(id) {
@@ -11,30 +12,64 @@ function deleteUser(id) {
 	    data: { 'id': id }
 	})
 	.done(function(result) {
-	   	console.log(result);
+	   	var row = $('.main').find("[data-user-id='"+id+"']");
+	   	row.hide("fast", function() {
+		   	row.remove();
+	   	});
     });
 }
 
 function createUser() {
-	$('#createUserForm').show("fast");
+	$(".createNewButton").hide("fast");
+	$('#createUpdateForm').show("fast");
 }
 
-$("#createUserForm").submit(function(e) {
+$(document).on('click', '.updateUser', function(e) { 
+	$(".createNewButton").hide("fast");
+	$('#createUpdateForm').show("fast");
+	$('#createUpdateForm').find("input[type='submit']").val("Update User");
+	var target = e.target;
+   	var row = $('.main').find("[data-user-id='"+$(target).data('user-id')+"']");
+
+   	var email = row.find('.email');
+	$('#createUpdateForm').find("input[name='email']").val(email.html()).attr("placeholder", "");
+
+   	var firstName = row.find('.first_name');
+	$('#createUpdateForm').find("input[name='firstName']").val(firstName.html()).attr("placeholder", "");
+
+   	var lastName = row.find('.last_name');
+	$('#createUpdateForm').find("input[name='lastName']").val(lastName.html()).attr("placeholder", "");
+
+	$('#createUpdateForm').find("input[name='password']").attr("placeholder", "password");
+
+	var id = $(target).data('user-id');
+	$('#createUpdateForm').find("input[name='id']").val(id);
+	updating = true;
+});
+
+$("#createUpdateForm").submit(function(e) {
+	if (!updating) {
+		var url = '/api/createUser';
+	}
+	else {
+		var url = '/api/updateUser';
+	}
 	var request = $.ajax({
-	    url: '/api/createUser',
+	    url: url,
 	    type: 'POST',
-	    data: $("#createUserForm").serialize()
+	    data: $("#createUpdateForm").serialize()
     })
 	.done(function(result) {
-	   	console.log(result);
+		console.log(result);
 	   	var parsedResult = JSON.parse(result);
 	   	if (parsedResult['success'] == true) {
 	   		updateUserList();
-	   		$("#createUserForm").find("input[type=text], input[type=password]").val("");
-   			$('#createUserForm').hide("fast");
-
+	   		$("#createUpdateForm").find("input[type=text], input[type=password]").val("");
+   			$('#createUpdateForm').hide("fast");
+			$(".createNewButton").show("fast");
 	   	}
     });
+
 	e.preventDefault();
 })
 
@@ -51,13 +86,13 @@ function updateUserList() {
 	   					 "<td>Password</td>"+
 	   					 "<td></td></tr>";
 	   	parsedResult.forEach(function(element) {
-	   		console.log(element);
-	   		list += "<tr>"+
+	   		list += "<tr data-user-id='"+element['id']+"'>"+
 	   					"<td>"+element['id']+"</td>"+
+	   					"<td>"+element['email']+"</td>"+
 	   					"<td>"+element['first_name']+"</td>"+
 	   					"<td>"+element['last_name']+"</td>"+
 	   					"<td>"+element['password']+"</td>"+
-	   					"<td><a href='./user/edit'>Edit</a>/<a href='#' onclick='deleteUser("+element['id']+")''>Delete</a></td>"+
+	   					"<td><a href='#' class='updateUser' data-user-id='"+element['id']+"'>Edit</a>/<a href='#' onclick='deleteUser("+element['id']+")''>Delete</a></td>"+
 	   				"</tr>";
 	   	});
 	   	$('.main').html(list);

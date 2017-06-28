@@ -9,17 +9,17 @@
 		<td></td>
 	</tr>
 <?php foreach ($users as $user): ?>
-	<tr>
+	<tr data-user-id="<?php echo $user['id']; ?>">
 	<?php foreach ($user as $key => $value): ?>
 		<td class="<?php echo $key; ?>"><?php echo $value;?></td>
 	<?php endforeach; ?>
-		<td><a href="./user/edit">Edit</a>/<a href="#" onclick="deleteUser(<?php echo $user['id']; ?>)">Delete</a></td>
+		<td><a href="#" class="updateUser" data-user-id="<?php echo $user['id']; ?>">Edit</a>/<a href="#" onclick="deleteUser(<?php echo $user['id']; ?>)">Delete</a></td>
 	</tr>
 <?php endforeach; ?>
 </table>
 
-<button onclick="createUser()">Create New!</button>
-<form method="POST" action="#" id="createUserForm" style="display:none;">
+<button class="createNewButton" onclick="createUser()">Create New!</button>
+<form method="POST" action="#" id="createUpdateForm" style="display:none;">
 	<label for="email">Email Address:
 		<input type="text" name="email" placeholder="email"/>
 	</label>
@@ -32,6 +32,7 @@
 	<label for="password">Password:
 		<input type="password" name="password" placeholder="password"/>
 	</label>
+	<input type="hidden" name="id">
     <input type="submit" value="Create User">
 </form>
 <?php include('./views/elements/footer.php'); ?>
