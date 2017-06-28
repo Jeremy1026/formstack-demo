@@ -8,7 +8,6 @@
 		public function getUsers() {
 			$users = DB::query("SELECT * FROM Users");
 			foreach ($users as $user) {
-				// print_r($user);
 				$uModel = new UserModel($user['id'], $user['email'], $user['first_name'], $user['last_name'],$user['password']);
 				$this->users[] = $uModel;
 			}
@@ -27,8 +26,12 @@
 		}
 
 		public function updateUser($id, $user) {
-			DB::update($this->table, $user, "id=%i", $id);
-            return array("success"=>"true");
+			try {
+				DB::update($this->table, $user, "id=%i", $id);			
+			} catch (Exception $e) {
+				return array("success"=>false, "error"=>$e);
+			}
+            return array("success"=>true,"updated"=>$id);
 		}
 
 		public function createUser($user) {
@@ -37,7 +40,7 @@
 			}
 
 			DB::insert($this->table, $user);
-            return array("success"=>"true");
+            return array("success"=>true);
 		}
 
 		public function deleteUser($id = null) {
