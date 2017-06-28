@@ -1,5 +1,8 @@
 {
     "require": {
         "sergeytsalkov/meekrodb": "^2.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7"
     }
 }
