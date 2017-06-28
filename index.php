@@ -3,11 +3,6 @@
 require 'vendor/autoload.php';
 
 
-//Establish database credentials
-DB::$user = 'my_app';
-DB::$password = 'secret';
-DB::$dbName = 'my_app';
-
 spl_autoload_register(function ($class) {
 	if (stripos($class, "controller")) {
 	    include './controllers/' . $class . '.php';
