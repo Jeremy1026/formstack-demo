@@ -9,10 +9,10 @@
 
 		public function __construct() {
 			
-			$this->getUsers();
+			// $this->getUsers();
 
-            $users = $this->users;
-			require_once('views/users/home.template.php');
+   //          $users = $this->users;
+			// require_once('views/users/home.template.php');
 
             // $this->updateUser($uModel->id, array('first_name'=>'J-Bone'));
 
@@ -26,6 +26,13 @@
 
 
 		}
+
+        public function view() {
+            $this->getUsers();
+
+            $users = $this->users;
+            require_once('views/users/home.template.php');
+        }
 
 		public function getUsers() {
 			$users = DB::query("SELECT * FROM Users");

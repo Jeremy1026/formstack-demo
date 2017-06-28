@@ -5,10 +5,14 @@ function call($controller, $action = null) {
         case 'users':
             $controller = new UsersController();
             break;
+        case 'api':
+            $controller = new ApiController();
+            break;
     }
-    if (($action) && ($action != '')) {
-        $controller->{ $action }();
+    if ((!$action) || ($action != '')) {
+        $action = 'view';
     }
+    $controller->{ $action }();
 }
 
 call($controller, $action);
