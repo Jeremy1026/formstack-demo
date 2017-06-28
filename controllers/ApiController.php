@@ -9,7 +9,17 @@ final class ApiController
     {
         $this->usersController = new UsersController();
     }
-        
+    
+    /**
+     *
+     * Get list of all users that are currently
+     * stored in the database. 
+     *
+     * @author Jeremy Curcio <j.curcio@me.com>
+     *
+     * @since 1.0
+     *
+     */
     public function getUsers()
     {
         $users = $this->usersController->getUsers();
@@ -17,6 +27,16 @@ final class ApiController
         return $users;
     }
 
+    /**
+      *
+      * Get a spcecific user by their ID. ID to be
+      * provided via POST using key 'id'
+      *
+      * @author Jeremy Curcio <j.curcio@me.com>
+      *
+      * @since 1.0
+      *
+      */
     public function getUserByID()
     {
         $user = $this->usersController->getUserByID($_POST['id']);
@@ -24,9 +44,22 @@ final class ApiController
         return $user;
     }
 
+    /**
+      *
+      * Updates a users information with provided data.
+      * Data provided via POST, must include 'id' key. 
+      *
+      * @author Jeremy Curcio <j.curcio@me.com>
+      *
+      * @since 1.0
+      *
+      */
     public function updateUser()
     {
         $data = $_POST;
+        if (isNull($data['id'])) {
+            return false;
+        }
         $id = $data['id'];
         $user = array("email"=>$data['email'],
                       "first_name"=>$data['firstName'],
@@ -46,6 +79,15 @@ final class ApiController
         }
     }
 
+    /**
+      *
+      * Create a new user. User data sent via POST. 
+      *
+      * @author Jeremy Curcio <j.curcio@me.com>
+      *
+      * @since 1.0
+      *
+      */
     public function createUser()
     {
         try
@@ -70,6 +112,16 @@ final class ApiController
         }
     }
 
+    /**
+      *
+      * Delete a user based on the ID. ID must be passed with POST
+      * using key 'id'.
+      *
+      * @author Jeremy Curcio <j.curcio@me.com>
+      *
+      * @since 1.0
+      *
+      */
     public function deleteUser()
     {
         try
