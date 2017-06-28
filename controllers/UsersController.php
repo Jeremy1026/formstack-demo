@@ -5,6 +5,12 @@
 		private $table = "Users";
 		private $missingKeys = array();
 
+		public function __construct() {
+			DB::$user = 'my_app';
+			DB::$password = 'secret';
+			DB::$dbName = 'my_app';
+		}
+
 		public function getUsers() {
 			$users = DB::query("SELECT * FROM Users");
 			foreach ($users as $user) {
@@ -52,7 +58,7 @@
 				}
 			}
 			DB::delete($this->table,'`id` = %i',$id);
-            return array("success"=>"true","removed"=>$id);
+            return array("success"=>true,"removed"=>$id);
 		}
 
 		private function checkForRequiredKeys($user) {

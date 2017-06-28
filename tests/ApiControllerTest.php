@@ -17,11 +17,9 @@ class ApiControllerTest extends TestCase {
 
 	public function testGetUserByID() {
 		$apiController = new ApiController();
-		$_POST['id'] = 7;
+		$users = $apiController->getUsers();
+		$_POST['id'] = $users[count($users)-1]['id'];
 		$user = $apiController->getUserByID();
-
-		echo "/r/n";
-		print_r($apiController);
 
 		$this->assertNotEmpty($user);
 	}
