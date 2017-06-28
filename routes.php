@@ -1,7 +1,9 @@
 <?php
 
-function call($controller, $action = null) {
-    switch($controller) {
+function call($controller, $action = null)
+{
+    switch($controller)
+    {
         case 'users':
             $controller = new UsersViewController();
             break;
@@ -9,7 +11,8 @@ function call($controller, $action = null) {
             $controller = new ApiController();
             break;
     }
-    if ((!$action) || ($action == '')) {
+    if ((!$action) || ($action == ''))
+    {
         $action = 'view';
     }
 
